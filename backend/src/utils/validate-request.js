@@ -1,3 +1,5 @@
+const { ApiError } = require("./api-error");
+
 const validateRequest = (schema) => (req, res, next) => {
     try {
         schema.parse({
@@ -13,10 +15,7 @@ const validateRequest = (schema) => (req, res, next) => {
             message: err.message,
         }));
 
-        return res.status(400).json({
-            error: "Validation error",
-            detail: formattedErrors
-        });
+        throw new ApiError(400, JSON.stringify(formattedErrors) );
     }
 }
 
