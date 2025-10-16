@@ -106,7 +106,8 @@ export const FilterStudent: React.FC<FilterStudentProps> = ({ methods, searchStu
         </Grid2>
         <Grid2 size={{ xs: 8, md: 3 }}>
           <TextField
-            {...register('roll')}
+            type='number'
+            {...register('roll', { valueAsNumber: true })}
             label='Roll'
             fullWidth
             size='small'
