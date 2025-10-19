@@ -28,11 +28,11 @@ export const FilterStudent: React.FC<FilterStudentProps> = ({ methods, searchStu
 
   const { control, register } = methods;
 
-  const handleClassChange = (selectedClass: number | string) => {
+  const handleClassChange = (selectedClassName: string) => {
     const classes = classResult?.classes || [];
-    const selectedSections = classes.find((cl) => cl.id === Number(selectedClass));
-    if (selectedSections) {
-      setSections(selectedSections.sections.length > 0 ? selectedSections.sections.split(',') : []);
+    const selectedClasses = classes.find((cl) => cl.name === selectedClassName);
+    if (selectedClasses) {
+      setSections(selectedClasses.sections.length > 0 ? selectedClasses.sections.split(',') : []);
     } else {
       setSections([]);
     }
@@ -56,13 +56,17 @@ export const FilterStudent: React.FC<FilterStudentProps> = ({ methods, searchStu
                   label='Class'
                   value={value}
                   onChange={(event) => {
-                    const selectedClass = event.target.value;
-                    onChange(selectedClass);
-                    handleClassChange(selectedClass);
+                    const selectedClassName = event.target.value;
+                    const classes = classResult?.classes || [];
+                    const selectedClass = classes.find((cl) => cl.name === selectedClassName);
+                    if (selectedClass) {
+                      onChange(selectedClass.name);
+                      handleClassChange(selectedClass!.name);
+                    }
                   }}
                 >
                   {classResult?.classes?.map((c) => (
-                    <MenuItem key={c.id} value={c.id.toString()}>
+                    <MenuItem key={c.id} value={c.name}>
                       {c.name}
                     </MenuItem>
                   ))}

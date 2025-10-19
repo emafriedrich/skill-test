@@ -21,8 +21,8 @@ const findAllStudents = async (payload) => {
         WHERE t1.role_id = 3`;
     let queryParams = [];
     if (name) {
-        query += ` AND t1.name = $${queryParams.length + 1}`;
-        queryParams.push(name);
+        query += ` AND t1.name ilike ($${queryParams.length + 1})`;
+        queryParams.push(`%${name}%`);
     }
     if (className) {
         query += ` AND t3.class_name = $${queryParams.length + 1}`;
@@ -83,7 +83,7 @@ const findStudentDetail = async (id) => {
     return rows[0];
 }
 
-const findStudentToSetStatus = async ({ userId, reviewerId, status }) => {
+const setStudentStatus = async ({ userId, reviewerId, isActive }) => {
     const now = new Date();
     const query = `
         UPDATE users
@@ -93,7 +93,7 @@ const findStudentToSetStatus = async ({ userId, reviewerId, status }) => {
             status_last_reviewer_id = $3
         WHERE id = $4
     `;
-    const queryParams = [status, now, reviewerId, userId];
+    const queryParams = [isActive, now, reviewerId, userId];
     const { rowCount } = await processDBRequest({ query, queryParams });
     return rowCount
 }
@@ -116,6 +116,6 @@ module.exports = {
     findAllStudents,
     addOrUpdateStudent,
     findStudentDetail,
-    findStudentToSetStatus,
+    setStudentStatus,
     findStudentToUpdate
 };

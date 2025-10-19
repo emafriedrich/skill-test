@@ -1,5 +1,5 @@
 const { ApiError, sendAccountVerificationEmail } = require("../../utils");
-const { findAllStudents, findStudentDetail, findStudentToSetStatus, addOrUpdateStudent } = require("./students-repository");
+const { findAllStudents, findStudentDetail, setStudentStatus: updateStudentStatus, addOrUpdateStudent } = require("./students-repository");
 const { findUserById } = require("../../shared/repository");
 
 const checkStudentId = async (id) => {
@@ -58,10 +58,10 @@ const updateStudent = async (payload) => {
     return { message: result.message };
 }
 
-const setStudentStatus = async ({ userId, reviewerId, status }) => {
+const setStudentStatus = async ({ userId, reviewerId, isActive }) => {
     await checkStudentId(userId);
 
-    const affectedRow = await findStudentToSetStatus({ userId, reviewerId, status });
+    const affectedRow = await updateStudentStatus({ userId, reviewerId, isActive });
     if (affectedRow <= 0) {
         throw new ApiError(500, "Unable to disable student");
     }

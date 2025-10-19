@@ -18,7 +18,7 @@ const initialState = {
   class: '',
   section: '',
   name: '',
-  roll: ''
+  roll: undefined
 };
 
 export const ListStudents: React.FC = () => {

@@ -16,11 +16,11 @@ import { NoticeForm } from '../components';
 
 const initialState: NoticeFormProps = {
   title: '',
-  content: '',
   status: 0,
   recipientType: 'EV',
   recipientRole: 0,
-  firstField: ''
+  firstField: '',
+  description: '',
 };
 
 export const AddNotice = () => {

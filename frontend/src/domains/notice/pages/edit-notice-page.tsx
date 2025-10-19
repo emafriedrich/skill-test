@@ -20,7 +20,7 @@ const initialState: NoticeFormProps = {
   status: 0,
   recipientType: 'EV',
   recipientRole: 0,
-  firstField: ''
+  firstField: '',
 };
 
 export const EditNotice = () => {

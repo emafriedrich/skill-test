@@ -31,7 +31,7 @@ export const studentApi = api.injectEndpoints({
       query: ({ id, status }) => ({
         url: `/students/${id}/status`,
         method: 'POST',
-        body: { status }
+        body: { is_active: status }
       }),
       invalidatesTags: (_result, _error, { id }) => [{ type: Tag.STUDENTS, id }]
     }),
